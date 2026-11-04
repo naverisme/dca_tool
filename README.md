@@ -1,73 +1,43 @@
 # DCA · Document Curation & Assurance
 
-DCA biến một tập tài liệu thô thành **bộ tài liệu theo chủ đề, có nội dung được biên soạn lại và dẫn nguồn**. Nó đối chiếu các phát biểu, tách phần mâu thuẫn hoặc thiếu căn cứ ra khu vực rà soát, rồi chỉ đưa phần đạt điều kiện kiểm định vào `docs/`. DCA cũng có thể tạo sơ đồ phù hợp với loại thông tin, khi sơ đồ giúp người đọc hiểu hơn.
+DCA là bộ hướng dẫn để agent CLI biến một folder dữ liệu thô thành folder `docs/` có nội dung được viết lại, thống nhất và xếp theo **quy ước cố định của người dùng**. Mô hình và quyền đọc/ghi đến từ Codex, Antigravity hoặc agent đang chạy; repo này không cài một lệnh shell độc lập.
 
-Đây là gói quy trình cho agent dùng trong phiên làm việc, không phải chương trình dòng lệnh độc lập. Codex, Antigravity hoặc agent khác cung cấp mô hình và quyền truy cập file; `dca/SKILL.md` cùng các tài liệu kèm theo quy định cách DCA làm việc. Gói dùng được với nhiều lĩnh vực, không mặc định dự án phần mềm hay Snote.
+## Cách dùng
 
-## Bắt đầu
+Sau khi [cài DCA](INSTALL.md), mở agent CLI tại dự án và gọi:
 
-Clone repo và đọc [INSTALL.md](INSTALL.md) để cài ở cấp người dùng hoặc cấp dự án. Sau đó, trong phiên agent đang mở tại dự án hoặc thư mục làm việc bạn chọn, gọi theo giao diện của agent:
-
-| Môi trường | Ví dụ gọi |
+| Agent | Ví dụ |
 | --- | --- |
-| Codex | `$dca help`, `$dca build /đường-dẫn/nguồn-thô --output ./docs` |
-| Antigravity | `/dca help`, `/dca build /đường-dẫn/nguồn-thô --output ./docs` |
-| Agent khác đọc file | `Đọc <đường-dẫn>/dca_tool/dca/SKILL.md rồi thực hiện dca build <folder-nguồn> --output ./docs.` |
+| Codex | `$dca build "/đường-dẫn/bất-kỳ/raw" --output ./docs` |
+| Antigravity | `/dca build "/đường-dẫn/bất-kỳ/raw" --output ./docs` |
+| Agent đọc file | `Đọc dca/SKILL.md trong dca_tool; thực hiện dca build cho <folder-nguồn> và xuất ./docs.` |
 
-Các từ `build`, `audit` hoặc `diagram` là thao tác được agent diễn giải theo gói hướng dẫn. Chúng không phải lệnh shell `dca` và repo này không cài một binary tên `dca`.
+`--output` trỏ thẳng tới folder tài liệu. Nguồn có thể nằm ngoài repo nếu agent có quyền đọc. DCA không sửa nguồn.
 
-Ví dụ, nếu hai file nguồn bất đồng về quyền xem checklist, DCA ghi cả hai nguồn và điểm chưa phân xử trong `docs-review/unresolved.md`. Nó không viết một quy tắc quyền tùy chọn vào `docs/`. Các phần khác đủ căn cứ vẫn có thể được biên soạn thành tài liệu dùng trực tiếp.
+## Quy trình
 
-## Đầu ra của `build`
-
-`--output` trỏ **thẳng tới folder docs**. Nếu bỏ qua, DCA dùng `./docs`. Hồ sơ rà soát mặc định ở folder ngang hàng `./docs-review`, hoặc đường dẫn được chọn bằng `--review-output`.
+1. Đọc toàn bộ nguồn trong phạm vi được giao và làm rõ mục tiêu bộ tài liệu. Phân biệt dữ kiện, đề xuất, ví dụ và quyết định đã được người có quyền xác nhận.
+2. Chọn **profile tài liệu cố định**. Profile `software-v1` dùng cùng tên nhóm và file cho mọi dự án phần mềm. Với lĩnh vực khác chưa có profile, DCA hỏi để xác lập một profile dùng lại, không tự tạo cấu trúc khác nhau theo từng dự án.
+3. Đối chiếu nội dung, gộp phần trùng, viết lại theo vị trí đã quy định. Chỉ tạo file có nội dung đủ rõ. Không chép câu rời rạc hay chỉ tạo chỉ mục tới nguồn.
+4. Nếu có điểm mâu thuẫn, thiếu hoặc cần quyết định, tạo **một file** `docs-clarifications.md` bên cạnh `docs/`, gồm câu hỏi cụ thể, các cách hiểu và chỗ sẽ cập nhật. Không tự điền giả định vào docs.
+5. Khi bạn trả lời trong phiên hoặc điền vào file câu hỏi, gọi `dca update <folder-nguồn> --output ./docs`. DCA kiểm tra câu trả lời, sửa các file docs bị ảnh hưởng và giữ lại chỉ những câu hỏi chưa giải quyết.
 
 ```text
-<parent>/
+<project>/
   docs/
-    README.md               Mục tiêu, phạm vi, mốc nguồn và bản đồ chủ đề
-    <danh-mục>/
-      README.md             Phạm vi danh mục
-      <chủ-đề>.md           Nội dung đã biên soạn và dẫn nguồn tại chỗ
-      <sơ-đồ>.md            Chỉ tạo khi hữu ích và có đủ căn cứ
-  docs-review/
-    README.md               Độ phủ và giới hạn kiểm định
-    provenance.md           Dấu vết nguồn → mệnh đề → tài liệu
-    unresolved.md           Mâu thuẫn, mơ hồ, thiếu bằng chứng
-    manifest.md             Mốc nguồn và danh sách file DCA sở hữu
-    blocked/                Bản nháp bị chặn, nếu cần
+    README.md
+    product/
+    requirements/
+    ux/
+    architecture/
+    contracts/
+    verification/
+    operations/
+  docs-clarifications.md   # chỉ có khi còn câu hỏi
 ```
 
-Trước khi ghi, DCA xác định mục tiêu bộ dữ liệu tài liệu, lĩnh vực và người đọc; đề xuất cấu trúc và quy cách trình bày khi chưa có quy ước. Nó trao đổi với bạn nếu có nhiều phương án ảnh hưởng đáng kể tới ý nghĩa hoặc tổ chức tài liệu. Tên danh mục được chọn từ nội dung nguồn và quy ước đã chốt; không áp một cây thư mục cố định cho mọi lĩnh vực. `docs/` là tài liệu đã được biên soạn để đọc trực tiếp, không phải danh sách đường dẫn trở lại file thô. `DCA-checked` có nghĩa là đã đối chiếu trong phạm vi khảo sát; chỉ ghi `approved` khi có chứng cứ người có quyền đã phê duyệt. Tệp nguồn không bị di chuyển hoặc sửa bởi `build`.
+Chỉ tạo nhóm và file có nội dung. Danh mục, tên file và ranh giới của `software-v1` nằm trong [quy ước tài liệu](dca/references/document-standard.md). Các phần cần làm rõ không trở thành quy tắc đã chốt.
 
-## Các thao tác
+**Quy tắc đầu ra:** Không đưa trích dẫn, tên hoặc đường dẫn của file thô, danh mục nguồn, bảng truy vết, manifest hay hồ sơ kiểm định vào `docs/` hoặc file câu hỏi. DCA vẫn phải đối chiếu nguồn **trong quá trình xử lý**; việc đối chiếu này không tự chứng minh nội dung đúng ngoài thực tế. Liên kết **giữa các tài liệu đã tạo trong docs** vẫn được phép. Chỉ ghi trạng thái `Đã duyệt` khi có xác nhận của người có quyền.
 
-| Thao tác | Công dụng | Ghi file mặc định |
-| --- | --- | --- |
-| `help` | Phiên bản, cách gọi | Không |
-| `init [phạm vi]` | Xác định nguồn, mốc, giới hạn | Không |
-| `inventory [phạm vi]` | Kiểm kê nguồn và độ phủ | Không |
-| `audit [chủ đề]` | Phát hiện mâu thuẫn, mơ hồ, thiếu, lặp, cũ | Không |
-| `organize [phạm vi]` | Đề xuất danh mục và nơi lưu chính | Không |
-| `normalize [tệp/chủ đề]` | Xem trước chuẩn hóa thuật ngữ, cấu trúc | Không |
-| `verify [mệnh đề/phạm vi]` | Kiểm chứng một phát biểu theo nguồn | Không |
-| `explain [câu hỏi]` | Giải thích có dẫn chứng và giới hạn | Không |
-| `sync [phạm vi]` | Đối chiếu nguồn mới với tài liệu chuẩn | Không |
-| `diagram [chủ đề]` | Chọn loại sơ đồ và tạo bản có truy nguồn | Không |
-| `diagram-check [sơ đồ]` | Rà sơ đồ so với nguồn và ký pháp | Không |
-| `build <folder-nguồn> [--output <folder-docs>] [--review-output <folder-review>]` | Xuất trực tiếp folder docs và hồ sơ review bên cạnh | Có, tại hai đích đã chọn |
-| `apply <draft-id>` | Ghi đúng bản nháp đã chọn sau khi kiểm lại đích | Có, tại tệp đích |
-
-`organize`, `normalize` và `diagram` chỉ lưu bản nháp với `--draft` khi được yêu cầu. `apply` kiểm lại mốc và khác biệt trước khi ghi. DCA không tự quyết định ý nghĩa nghiệp vụ đang tranh chấp và không lập kế hoạch coding hay giai đoạn tiếp theo.
-
-## Thành phần gói
-
-| Đường dẫn | Vai trò |
-| --- | --- |
-| [INSTALL.md](INSTALL.md) | Cài, kiểm tra, cập nhật, gỡ |
-| [dca/SKILL.md](dca/SKILL.md) | Điểm vào và hợp đồng thao tác |
-| [dca/references/](dca/references/) | Bằng chứng, chuẩn hóa, xuất bản, đầu ra và sơ đồ |
-| [dca/assets/](dca/assets/) | Mẫu tài liệu và sổ kiểm định |
-| [dca/VERSION](dca/VERSION) | Phiên bản gói |
-
-Cơ chế nạp skill: [Codex](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills) và [Antigravity](https://antigravity.google/docs/skills/). Quyền truy cập file và dữ liệu do môi trường agent đang chạy kiểm soát.
+DCA không tự lập roadmap, chia task hoặc suy ra bước coding. [Hướng dẫn vận hành](dca/SKILL.md) · [Quy tắc kiểm định](dca/references/curation.md).

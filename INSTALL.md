@@ -62,4 +62,4 @@ Copy-Item -LiteralPath $source -Destination $destination -Recurse -ErrorAction S
 
 Lấy phiên bản mới bằng `git pull --ff-only` trong checkout của `dca_tool`. So sánh bản mới với thư mục cài, sao lưu bản cũ ngoài đường dẫn agent quét, rồi thay nguyên thư mục `dca/` và đối chiếu file. Nếu có sửa riêng, giữ bản đó để xử lý khác biệt trước khi thay. Quay lại bằng bản sao lưu và kiểm tra `help`. Gỡ bằng cách di chuyển đúng thư mục `dca` đã xác minh ra ngoài vùng agent quét; không xóa skill khác.
 
-Việc cài DCA chỉ cung cấp quy trình. `build <folder-nguồn> --output <folder-docs>` sẽ ghi tài liệu trực tiếp vào folder docs và hồ sơ rà soát ở folder riêng bên cạnh khi được gọi, còn các lệnh đọc chỉ phân tích trong phiên.
+Việc cài DCA chỉ cung cấp quy trình. `build <folder-nguồn> --output <folder-docs>` tạo docs theo profile cố định và file `<tên-folder-docs>-clarifications.md` bên cạnh khi cần. `update` nhận câu trả lời để sửa lại docs; gói không sinh báo cáo provenance hay đường dẫn nguồn thô trong đầu ra.
