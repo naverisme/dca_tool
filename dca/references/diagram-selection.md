@@ -1,0 +1,26 @@
+# Chọn loại sơ đồ và ký pháp
+
+## Quy tắc chọn
+
+1. Hỏi **sơ đồ phải trả lời câu hỏi gì** và ai sẽ đọc: phạm vi chức năng, quy trình, quyết định, thứ tự trao đổi, vòng đời trạng thái, cấu trúc dữ liệu, kết cấu cơ khí hay kết nối vật lý?
+2. Xác định mức yêu cầu: **minh họa dễ hiểu**, **dùng ký pháp thông dụng**, hay **phải tuân thủ một tiêu chuẩn và phiên bản cụ thể**. Nếu dự án đã quy định, dùng đúng quy định; nếu thiếu, đề xuất theo bảng dưới và ghi cơ sở chọn. Không tự tuyên bố tuân chuẩn.
+3. Kiểm tra đầu vào có đủ thực thể, quan hệ, điều kiện, hướng, đơn vị và ngoại lệ cần cho loại sơ đồ đó không. Nếu thiếu phần quyết định hình dạng/ngữ nghĩa, ghi lỗ hổng và chỉ dựng phần đã đủ căn cứ.
+4. Chọn công cụ có thể biểu diễn đúng ký pháp. Mermaid là ngôn ngữ vẽ; một `flowchart` không tự thành BPMN, UML, bản vẽ cơ khí hay sơ đồ điện chuẩn. Kiểm tra phiên bản Mermaid của nền tảng hiển thị, nhất là GitHub. Nếu không có công cụ chuyên dụng, xuất mô tả có cấu trúc hoặc sơ đồ khái niệm **ghi rõ không tuân chuẩn ký pháp**.
+
+| Cần làm rõ | Sơ đồ / ký pháp chọn | Dữ kiện bắt buộc và điều cần kiểm | Tránh nhầm với |
+| --- | --- | --- | --- |
+| Ai dùng hệ thống để đạt mục tiêu gì | UML Use Case 2.5.1 | Tác nhân bên ngoài, ranh giới hệ thống, mục tiêu; `include`/`extend` chỉ khi đúng nghĩa UML. Mô tả điều kiện và ngoại lệ bằng chữ cạnh sơ đồ | Luồng thao tác theo thời gian, phân quyền chi tiết |
+| Công việc diễn ra qua vai trò/đơn vị như thế nào | BPMN 2.0.2 khi cần mô hình quy trình chính thức; swimlane/flowchart có nhãn khi chỉ minh họa | Sự kiện bắt đầu/kết thúc, activity, gateway với điều kiện, pool/lane và message flow/sequence flow đúng đối tượng; đường lỗi | UML Use Case hoặc mũi tên giữa vai trò gọi là BPMN |
+| Điều kiện nào dẫn đến quyết định nào | DMN 1.5 decision table/DRD; bảng điều kiện nếu đơn giản | Đầu vào, đầu ra, quy tắc, thứ tự/độ ưu tiên và hit policy nếu dùng DMN; kiểm tra trùng và thiếu trường hợp | BPMN diễn tả thứ tự công việc |
+| Các bên trao đổi theo thứ tự nào | UML Sequence 2.5.1; Mermaid sequence nếu chỉ minh họa | Participants, thông điệp, phản hồi, điều kiện, nhánh lỗi; không suy ra API chưa có nguồn | Use Case chỉ cho biết mục tiêu |
+| Một đối tượng chuyển trạng thái ra sao | UML State Machine 2.5.1; Mermaid state nếu chỉ minh họa | Trạng thái, sự kiện, guard, chuyển tiếp, trạng thái đầu/cuối, chuyển tiếp cấm hoặc thiếu | Quy trình nhiều đối tượng qua nhiều vai trò |
+| Loại dữ liệu và quan hệ | ERD theo ký pháp đã thỏa thuận hoặc UML Class 2.5.1 | Thực thể, thuộc tính cần thiết, lực lượng quan hệ, tùy chọn/bắt buộc, danh tính; ghi rõ ký pháp ERD đang dùng | Bảng SQL đã triển khai hoặc luồng dữ liệu |
+| Phân rã và liên kết của hệ thống đa ngành | SysML 2.0 khi có nhu cầu mô hình hệ thống chính thức; quan hệ khối khái niệm khi chỉ giải thích | Ranh giới, phần, cổng/luồng, yêu cầu, hành vi và quan hệ truy vết theo loại view | Bản vẽ lắp hay sơ đồ nối dây |
+| Một góc nhìn kiến trúc của hệ thống | Viewpoint theo ISO/IEC/IEEE 42010:2022; chọn ký pháp cụ thể cho view | Người quan tâm, mối quan tâm, phạm vi, thành phần, quan hệ, giới hạn; 42010 không áp đặt một hình vẽ duy nhất | Tự gọi một flowchart là “chuẩn 42010” |
+| Hình dạng, mặt cắt, kích thước của chi tiết cơ khí | Bản vẽ kỹ thuật theo họ ISO 128; kích thước theo ISO 129-1; phép chiếu theo ISO 5456-2 | Hình chiếu/mặt cắt, kích thước/đơn vị, dung sai và dữ kiện chế tạo phù hợp; cần công cụ CAD/drafting | Sơ đồ khối cơ cấu; Mermaid không thể thay bản vẽ chế tạo |
+| Mạch thủy lực hoặc khí nén | ISO 1219 phần 1 (ký hiệu), phần 2 (sơ đồ mạch) | Thành phần, cổng, đường nối, trạng thái van, lưu lượng/hướng khi có nguồn | Sơ đồ khối mô tả nguyên lý |
+| Kết nối và tài liệu điện | IEC 60617 (ký hiệu) và IEC 61082-1 (quy tắc trình bày) | Ký hiệu thiết bị, mã tham chiếu, terminal, dây/nút nối, nhãn/đơn vị | Mũi tên flowchart diễn đạt dây điện |
+| Logic điều khiển PLC | IEC 61131-3:2025 Ladder Diagram hoặc Function Block Diagram khi cần logic PLC | Đầu vào/ra, khối, điều kiện, chu kỳ/thứ tự khi có, ngữ nghĩa thực thi | Sơ đồ quyết định nghiệp vụ DMN |
+| Dòng công nghệ hóa/chế biến | ISO 10628 phần 1 (loại và nội dung sơ đồ), phần 2 (ký hiệu) | Thiết bị, dòng vật chất/năng lượng, mã và ký hiệu theo loại bản vẽ | BPMN quy trình hành chính |
+
+**Nguồn gốc để kiểm tra phiên bản và phạm vi:** [OMG UML](https://www.omg.org/spec/UML/2.5.1), [OMG BPMN](https://www.omg.org/spec/BPMN/2.0.2), [OMG DMN](https://www.omg.org/spec/DMN/1.5/), [OMG SysML](https://www.omg.org/spec/SysML/2.0/), [ISO/IEC/IEEE 42010](https://www.iso.org/standard/74393.html), [ISO 128-1](https://www.iso.org/standard/65296.html), [ISO 129-1](https://www.iso.org/standard/64007.html), [ISO 5456-2](https://www.iso.org/standard/11502.html), [ISO 1219-1](https://www.iso.org/standard/60184.html), [ISO 1219-2](https://www.iso.org/standard/51200.html), [IEC 60617](https://webstore.iec.ch/en/publication/2723), [IEC 61082-1](https://webstore.iec.ch/en/publication/4469), [IEC 61131-3](https://webstore.iec.ch/en/publication/68533), [ISO 10628-1](https://www.iso.org/standard/51840.html), [ISO 10628-2](https://www.iso.org/standard/51841.html). Kiểm tra lại bản hiện hành trước khi nêu số phiên bản hoặc tuyên bố tuân thủ.
