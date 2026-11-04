@@ -1,11 +1,17 @@
-# Kiểm sơ đồ trước khi đưa vào docs
+# Kiểm tra chất lượng sơ đồ trước khi đưa vào docs
 
-Sơ đồ là cách diễn đạt lại thông tin đã rõ, không tạo thêm quy tắc. Chỉ tạo khi có nhiều nhánh, trạng thái, quan hệ hoặc trao đổi khiến văn bản/bảng khó đọc; chọn ký pháp theo [bảng chọn](diagram-selection.md). Trong `software-v1`, đặt sơ đồ trong slot tài liệu đang mô tả nội dung đó, không tự tạo tên folder/file mới.
+Sơ đồ là cách diễn đạt trực quan lại các thông tin và quy tắc đã được xác định rõ ràng, không tự ý tạo thêm quy tắc ngoài văn bản. Chỉ dựng sơ đồ khi có luồng công việc nhiều nhánh, máy trạng thái phức tạp, quan hệ thực thể hoặc giao thức trao đổi tuần tự khiến văn bản khó diễn đạt trọn vẹn; chọn ký pháp theo [bảng chọn sơ đồ](diagram-selection.md).
 
-1. Xác định câu hỏi sơ đồ phải trả lời, đối tượng đọc, phạm vi và loại sơ đồ. Nếu không đủ thông tin để vẽ đúng một nhánh/quan hệ, đưa điều cần hỏi vào file clarifications; vẽ riêng phần độc lập nếu vẫn hữu ích.
-2. Ánh xạ **nội bộ** từng thành phần và quan hệ về phát biểu đã được đối chiếu. Không chuyển dấu vết file thô, ID khảo sát, chú thích nguồn hoặc đường dẫn file thô vào sơ đồ hay tài liệu đầu ra.
-3. Kèm mô tả bằng chữ về điều kiện, ngoại lệ, chiều mũi tên, bội số, đơn vị hoặc chú giải cần thiết. Kiểm sơ đồ không mâu thuẫn với tài liệu ở slot chính và không tự thêm chi tiết.
-4. Kiểm cú pháp và render nếu có công cụ. Ghi rõ mức độ: minh họa khái niệm, dùng ký pháp thông dụng, hoặc bản tuân chuẩn **khi đã kiểm đủ yêu cầu và công cụ phù hợp**. Mermaid flowchart không tự thành BPMN, UML, bản vẽ điện/cơ khí đạt chuẩn.
-5. Sau khi người dùng trả lời câu hỏi làm đổi logic, cập nhật cả sơ đồ và văn bản trong cùng lần `dca update`.
+Trong cấu trúc 8 Trụ Cột của DCA, đặt sơ đồ trực tiếp vào slot tài liệu tương ứng (ví dụ: Context Diagram trong `02-scenarios/context.md`, Screen Flow / State Machine trong `04-experience/navigation.md`, ERD trong `05-architecture/data-model.md`, Sequence Diagram trong `05-architecture/contracts.md`, DAG trong `08-delivery/plan.md`), không tự tạo thêm thư mục tùy tiện.
 
-Không bắt buộc có sơ đồ; bảng và đoạn văn thường phù hợp hơn với định nghĩa hoặc ma trận quyền ngắn.
+---
+
+## Quy trình kiểm soát chất lượng sơ đồ
+
+1. **Xác định mục tiêu & đối tượng:** Sơ đồ giải quyết câu hỏi kỹ thuật nào, phục vụ vai trò nào (kiến trúc sư, lập trình viên, kiểm thử viên hay chuyên gia vận hành). Nếu thiếu dữ kiện để vẽ trọn vẹn một nhánh logic, đưa câu hỏi vào file clarifications; tuyệt đối không tự vẽ phỏng đoán.
+2. **Đối chiếu nội bộ:** Ánh xạ từng khối, mũi tên, nhãn và điều kiện rẽ nhánh về đúng mã yêu cầu (`REQ-xxx`) hoặc hợp đồng (`CTR-xxx`). Không đưa đường dẫn file thô hay dữ liệu tạm vào sơ đồ.
+3. **Mô tả văn bản đi kèm:** Mọi sơ đồ phải có đoạn văn hoặc bảng đi kèm giải thích rõ điều kiện tiên quyết, ý nghĩa chiều mũi tên, các mã lỗi ngoại lệ, đơn vị đo lường hoặc chú giải ký hiệu.
+4. **Kiểm tra cú pháp & tính tương thích:**
+   - Đảm bảo cú pháp Mermaid hợp lệ, render tốt trên các nền tảng phổ biến (GitHub, GitLab, Obsidian, IDE preview).
+   - Tránh nhầm lẫn ký pháp: Một `flowchart` Mermaid không tự động trở thành một quy trình BPMN chuẩn, một sơ đồ mạch điện IEC hay một bản vẽ cơ khí ISO. Ghi rõ mức độ chuẩn hóa (sơ đồ khái niệm vs tuân thủ đặc tả).
+5. **Cập nhật đồng bộ:** Khi có thay đổi từ người dùng thông qua `dca update`, phải cập nhật đồng thời cả văn bản đặc tả và sơ đồ trực quan để bảo đảm tính nhất quán tuyệt đối.
