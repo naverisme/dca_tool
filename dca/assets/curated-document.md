@@ -19,7 +19,7 @@ Ví dụ minh họa định dạng: Trong phạm vi lớp học này, giáo viê
 
 ## Giới hạn
 
-<Nêu điều không được tài liệu này xác nhận. Nếu chủ đề liên quan bị chặn, dẫn đến review/unresolved.md bằng đường dẫn tương đối phù hợp, không viết phương án chưa chốt thành quy tắc.>
+<Nêu điều không được tài liệu này xác nhận. Nếu chủ đề liên quan bị chặn, nêu giới hạn ngay trong tài liệu; hồ sơ chi tiết ở folder review ngang hàng. Không buộc người đọc phải mở hồ sơ hoặc file thô để hiểu phần đã xác minh, và không viết phương án chưa chốt thành quy tắc.>
 
 ## Sơ đồ
 

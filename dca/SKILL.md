@@ -20,10 +20,17 @@ Thực hiện lệnh trong phiên agent chủ. Agent chủ cung cấp mô hình,
 | `sync [phạm vi]` | So nguồn mới với tài liệu chuẩn đã xác định | Chỉ đọc |
 | `diagram [chủ đề]` | Chọn ký pháp, tạo sơ đồ từ mệnh đề đã truy nguồn, kèm bảng kiểm ngữ nghĩa | Chỉ đọc |
 | `diagram-check [sơ đồ]` | Đối chiếu sơ đồ với nguồn và quy tắc ký pháp đã chọn | Chỉ đọc |
-| `build [phạm vi] --output <thư mục>` | Lọc và biên soạn bộ `docs/` dùng trực tiếp; để dữ kiện chưa giải quyết và dấu vết kiểm định trong `review/` | Ghi trong thư mục đầu ra |
+| `build <folder-nguồn> [--output <folder-docs>] [--review-output <folder-review>]` | Biên soạn trực tiếp vào folder `docs/`; tách mâu thuẫn và dấu vết sang folder rà soát ngang hàng | Ghi đúng hai đích đã xác định |
 | `apply <draft-id>` | Ghi đúng bản nháp được chọn vào tệp tài liệu | Chỉ tệp được duyệt |
 
-`build` là lệnh biến nguồn thô thành bộ tài liệu theo [hợp đồng thư mục](references/output-package.md); chọn `dca-output/` trong workspace nếu người dùng chưa đặt đường dẫn. Nó viết nội dung hoàn chỉnh, có cấu trúc vào `docs/`, không chỉ tạo chỉ mục dẫn lại file thô. Những nội dung chưa đủ căn cứ nằm riêng trong `review/`. Lệnh này không tự thay tài liệu nguồn hoặc tài liệu chính thức. `organize --draft`, `normalize --draft` và `diagram --draft` lưu bản nháp khi được yêu cầu. Các thao tác khảo sát còn lại chỉ xem trước. `apply` dùng [quy tắc xuất bản](references/publication.md). Không tự ghi đè nội dung đang thay đổi.
+`build` nhận một folder nguồn ở bất kỳ nơi nào agent được phép đọc, theo [hợp đồng thư mục](references/output-package.md). `--output` là **đường dẫn đến chính folder docs**, mặc định `./docs`; hồ sơ rà soát mặc định ở folder ngang hàng `<tên-docs>-review/` (ví dụ `./docs-review`). Nội dung trong docs được biên soạn thành tài liệu dùng trực tiếp, không chỉ dẫn lại file thô. Không tự sửa nguồn. `organize --draft`, `normalize --draft` và `diagram --draft` lưu bản nháp khi được yêu cầu. Các thao tác khảo sát còn lại chỉ xem trước. `apply` dùng [quy tắc xuất bản](references/publication.md). Không tự ghi đè nội dung đang thay đổi.
+
+## Quy trình `build`
+
+1. Xác nhận folder nguồn, mục tiêu của **bộ dữ liệu tài liệu**, người đọc, phạm vi, mốc nguồn và các quy ước đã được duyệt. Nguồn có thể nằm ngoài repo; không suy ra thẩm quyền từ vị trí file.
+2. Kiểm kê, tách mệnh đề, kiểm chứng và đối chiếu. Nhận diện lĩnh vực, đề xuất cấu trúc danh mục và cách trình bày phù hợp; trao đổi với người dùng khi cách phân loại, chuẩn trình bày hoặc nghĩa nghiệp vụ có nhiều phương án ảnh hưởng đáng kể. Tiếp tục phần độc lập đã rõ; ghi rõ giả định trình bày không làm đổi nghĩa.
+3. Biên soạn nội dung đủ căn cứ vào folder docs tại `--output`. Đặt giới hạn, phiên bản và trích dẫn ngay trong từng tài liệu. Để phần chưa xác minh và dấu vết kiểm định ở folder review riêng, không lẫn thành quy tắc trong docs.
+4. Kiểm cấu trúc, liên kết, nguồn trích dẫn, sự nhất quán giữa văn bản và sơ đồ, rồi bàn giao hai đường dẫn, độ phủ và giới hạn. Không tạo sơ đồ nếu văn bản/bảng đã đủ rõ.
 
 ## Ranh giới
 
@@ -34,6 +41,6 @@ Thực hiện lệnh trong phiên agent chủ. Agent chủ cung cấp mô hình,
 
 ## Cách làm
 
-Đọc [quy tắc bằng chứng](references/evidence.md) cho mọi lệnh khảo sát. Đọc [quy tắc chuẩn hóa](references/normalization.md) cho `organize`, `normalize`, `sync`. Với `diagram` hoặc `diagram-check`, đọc [bảng chọn ký pháp](references/diagram-selection.md), [quy trình sơ đồ](references/diagram-quality.md) và dùng [mẫu hồ sơ sơ đồ](assets/diagram-record.md). Với `build`, đọc [hợp đồng thư mục](references/output-package.md), dùng [mẫu chỉ mục](assets/package-index.md), [mẫu tài liệu](assets/curated-document.md) và [mẫu bảng đăng ký](assets/package-registers.md). Đọc [quy tắc xuất bản](references/publication.md) trước khi lưu nháp hoặc ghi vào tài liệu đích. Dùng [mẫu báo cáo](assets/audit-report.md) và [mẫu dữ kiện](assets/fact-register.md) khi cần đầu ra đầy đủ; thích ứng quy ước hiện có, tránh tạo bản chính trùng nhau.
+Đọc [quy tắc bằng chứng](references/evidence.md) cho mọi lệnh khảo sát. Đọc [quy tắc chuẩn hóa](references/normalization.md) cho `organize`, `normalize`, `sync` và `build`. Với `diagram` hoặc `diagram-check`, đọc [bảng chọn ký pháp](references/diagram-selection.md), [quy trình sơ đồ](references/diagram-quality.md) và dùng [mẫu hồ sơ sơ đồ](assets/diagram-record.md). Với `build`, đọc [hợp đồng thư mục](references/output-package.md), dùng [mẫu chỉ mục](assets/package-index.md), [mẫu tài liệu](assets/curated-document.md) và [mẫu bảng đăng ký](assets/package-registers.md). Đọc [quy tắc xuất bản](references/publication.md) trước khi lưu nháp hoặc ghi vào tài liệu đích. Dùng [mẫu báo cáo](assets/audit-report.md) và [mẫu dữ kiện](assets/fact-register.md) khi cần đầu ra đầy đủ; thích ứng quy ước hiện có, tránh tạo bản chính trùng nhau.
 
 Nêu phạm vi, nguồn và phiên bản đã đọc, phần chưa đọc, trạng thái từng phát hiện, vị trí của kết luận quan trọng, bản xem trước hoặc file đã sửa, và những vấn đề vẫn mở. Không mô tả tài liệu là đã thống nhất nếu còn mâu thuẫn chưa chốt.

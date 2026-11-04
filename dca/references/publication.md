@@ -1,6 +1,6 @@
 # Nháp và ghi tài liệu
 
-`organize`, `normalize`, `diagram`, `sync` chỉ xem trước mặc định. Lưu nháp khi người dùng yêu cầu `--draft`; không ghi vào tệp đích.
+`build` ghi trực tiếp vào folder docs được chọn và folder review riêng sau khi xác định phạm vi và kiểm tra đích. `organize`, `normalize`, `diagram`, `sync` chỉ xem trước mặc định. Lưu nháp khi người dùng yêu cầu `--draft`; không ghi vào tệp đích.
 
 1. Xác định tệp đích, phạm vi, mốc nguồn và nội dung hiện tại. Các thay đổi nghĩa chưa chốt ở sổ phát hiện, không lẫn vào văn bản đã duyệt.
 2. Lưu bản nháp ở nơi rà riêng, kèm manifest ghi đường dẫn đích, hash nội dung đích lúc lập nháp hoặc `absent`, hash bản nháp, mốc nguồn và các phát hiện liên quan. Tính ID từ nội dung manifest đã cố định; không tự bịa ID hay hash.
