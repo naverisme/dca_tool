@@ -25,7 +25,7 @@ Khi thực hiện lệnh `dca build`, DCA tiến hành biên soạn dữ liệu 
 7. **Trụ cột 07 (`07-traceability/`):** Thiết lập ma trận truy vết hai chiều:
    - `GOAL-xxx` ↔ `REQ-xxx` ↔ `MOD/CTR-xxx` ↔ `TC-xxx` ↔ `TASK-xxx`.
    - Phân tích độ phủ (`gap-analysis.md`): Cảnh báo ngay nếu có yêu cầu chưa được thiết kế, yêu cầu chưa có bài test hoặc thiết kế không phục vụ yêu cầu nào.
-8. **Trụ cột 08 (`08-delivery/`):** Chia nhỏ kiến trúc thành kế hoạch thực thi (DAG) và các phiếu giao việc nguyên tử (`TASK-xxx`), xác định rõ vùng file được sửa và tiêu chuẩn bàn giao để người lập trình hoặc coding agent có thể code ngay lập tức.
+8. **Trụ cột 08 (`08-delivery/`):** Khi có đủ căn cứ, chia thiết kế thành kế hoạch theo phụ thuộc và phiếu giao việc (`TASK-xxx`), nêu phạm vi và bằng chứng bàn giao. Không tự ấn định thứ tự, thời lượng, người phụ trách hoặc đường dẫn file khi nguồn chưa quyết định; chuyển phần thiếu sang file làm rõ và đánh dấu chưa sẵn sàng.
 
 ---
 
@@ -49,6 +49,6 @@ Khi thực hiện lệnh `dca build`, DCA tiến hành biên soạn dữ liệu 
 Trước khi hoàn tất việc tạo hoặc cập nhật tài liệu, DCA phải tự kiểm tra:
 1. **Cấu trúc & Đặt tên:** Đúng tuyệt đối theo 8 nhóm thư mục số thứ tự (`01-product` đến `08-delivery`) và các slot file chuẩn.
 2. **Tính toàn vẹn liên kết:** Tất cả các liên kết nội bộ giữa các file Markdown và các mã định danh (`GOAL-xxx`, `REQ-xxx`, `CTR-xxx`, `TC-xxx`, `TASK-xxx`) phải nhất quán, không có liên kết hỏng.
-3. **Tính khép kín của truy vết:** Bảng truy vết (`matrix.md`) không có điểm đứt gãy. Mọi yêu cầu đều phải có cách kiểm chứng và thiết kế tương ứng.
+3. **Độ trung thực của truy vết:** Bảng `matrix.md` thể hiện cả liên kết đã xác lập lẫn ô còn thiếu. `gap-analysis.md` liệt kê yêu cầu chưa có thiết kế hoặc cách kiểm chứng; không tự điền để tạo cảm giác khép kín.
 4. **Không rò rỉ dữ liệu thô:** Tuyệt đối không xuất hiện các đường dẫn cục bộ (như `D:\raw\...`), tên file thô ngẫu nhiên, hoặc văn bản trích đoạn thô ráp chưa qua biên soạn.
-5. **Tính sẵn sàng thực thi:** Các phiếu giao việc trong `08-delivery/` phải đủ chi tiết, có phạm vi file rõ ràng, có tiêu chuẩn nghiệm thu xác định để người hoặc agent có thể nhận việc và code được ngay.
+5. **Tính sẵn sàng thực thi:** Chỉ đánh dấu một phiếu giao việc là sẵn sàng khi phạm vi, phụ thuộc, ranh giới chỉnh sửa và bằng chứng nghiệm thu đã được xác lập. Nếu thiếu, ghi rõ điều kiện còn mở trong `readiness.md` hoặc file làm rõ, không viết phiếu trông như đã chốt.
