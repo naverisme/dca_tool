@@ -2,7 +2,7 @@
 
 DCA biên soạn dữ liệu thô thành bộ tài liệu kỹ thuật chuẩn theo **8 trụ cột kỹ nghệ hệ thống** cố định. Profile mặc định là `standard-v2` áp dụng đồng nhất cho các dự án phần mềm, hệ thống kỹ thuật và sản phẩm số. 
 
-Cùng một profile phải cho cùng tên folder, file và ranh giới ở mọi dự án. Các thư mục được đánh số thứ tự từ `01-` đến `08-` để bảo đảm thứ tự tuần tự logic trong mọi môi trường (IDE, Git, File Explorer, Agent context). *(DCA cũng hỗ trợ bí danh không tiền tố số như `product/`, `scenarios/`... nếu dự án yêu cầu, nhưng khuyến nghị mặc định chuẩn số để giữ đúng luồng kỹ nghệ).*
+Cùng một profile phải dùng cùng tên folder, file và ranh giới ở mọi dự án. Tên tám nhóm `01-` đến `08-` là cố định; không tự đổi sang bí danh theo từng dự án. Chỉ tạo các tệp có đủ nội dung có căn cứ.
 
 ---
 
@@ -16,8 +16,8 @@ Cùng một profile phải cho cùng tên folder, file và ranh giới ở mọi
 | 4 | `04-experience/` | **Thiết kế trải nghiệm hoặc vận hành** | Người dùng, thiết bị hoặc hệ thống khác tương tác qua những điểm nào? Mỗi thao tác gây ra kết quả gì? | Màn hình, lệnh CLI, tín hiệu hoặc giao diện ngoài cần triển khai tùy loại sản phẩm. | `screens.md`, `navigation.md`, `interaction-states.md` |
 | 5 | `05-architecture/` | **Thiết kế kiến trúc và hợp đồng giữa các phần** | Có những thành phần nào, phần nào sở hữu dữ liệu, chúng trao đổi thế nào, lỗi được xử lý ở đâu? | Ranh giới module (`MOD-xxx`), mô hình dữ liệu (ERD), hợp đồng (`CTR-xxx`) và quyết định kỹ thuật (`ADR-xxx`) để chia việc. | `system.md`, `modules.md`, `data-model.md`, `contracts.md`, `decisions.md` |
 | 6 | `06-verification/` | **Kế hoạch kiểm chứng** | Làm cách nào chứng minh từng yêu cầu đã đạt? Cần dữ liệu, thiết bị, phép đo hoặc ca thử nào? | Ca kiểm chứng nghiệm thu (`TC-xxx`) và tiêu chí hoàn thành (DoD) cụ thể cho từng gói việc. | `test-strategy.md`, `acceptance-tests.md`, `definition-of-done.md` |
-| 7 | `07-traceability/` | **Bảng truy vết** | Mục tiêu nào sinh ra yêu cầu nào? Thiết kế và ca kiểm tra nào đáp ứng yêu cầu đó? | Ma trận truy vết 2 chiều khép kín, phát hiện yêu cầu chưa có thiết kế hoặc chưa có cách kiểm tra. | `matrix.md`, `gap-analysis.md` |
-| 8 | `08-delivery/` | **Kế hoạch triển khai và phiếu giao việc** | Việc nào làm trước, việc nào phụ thuộc việc khác, ai được sửa phần nào và bàn giao bằng chứng gì? | Các nhiệm vụ (`TASK-xxx`) đủ rõ ràng, có ranh giới file cho phép sửa và bằng chứng bàn giao để giao cho người hoặc agent code. | `plan.md`, `task-packages.md`, `readiness.md` |
+| 7 | `07-traceability/` | **Bảng truy vết** | Mục tiêu nào sinh ra yêu cầu nào? Thiết kế và ca kiểm tra nào đáp ứng yêu cầu đó? | Ma trận truy vết 2 chiều ghi cả liên kết đã có lẫn khoảng trống cần làm rõ. | `matrix.md`, `gap-analysis.md` |
+| 8 | `08-delivery/` | **Kế hoạch triển khai và phiếu giao việc** | Việc nào làm trước, việc nào phụ thuộc việc khác, ai được sửa phần nào và bàn giao bằng chứng gì? | Phiếu giao việc (`TASK-xxx`) chỉ được đánh dấu sẵn sàng khi có đủ ranh giới, phụ thuộc và bằng chứng bàn giao. | `plan.md`, `task-packages.md`, `readiness.md` |
 
 ---
 
@@ -79,10 +79,10 @@ Cùng một profile phải cho cùng tên folder, file và ranh giới ở mọi
 - **`task-packages.md`**: Danh mục phiếu giao việc chi tiết (`TASK-xxx`):
   1. Mã task & Mục tiêu thực hiện cụ thể.
   2. Yêu cầu & Hợp đồng liên quan (`REQ-xxx`, `CTR-xxx`).
-  3. **Ranh giới file được phép chỉnh sửa**: Whitelist các file/thư mục cụ thể mà người hoặc AI agent được phép can thiệp (chống xung đột code chéo hoặc sửa ngoài phạm vi).
+  3. **Ranh giới chỉnh sửa**: Nêu module và, nếu đã biết cấu trúc kho mã, các file/thư mục được phép can thiệp. Không tự đặt tên file khi chưa có căn cứ.
   4. Ràng buộc phụ thuộc (Task tiền đề cần xong trước).
   5. **Bằng chứng bàn giao bắt buộc**: Deliverables/Evidence kiểm chứng được (PR link, unit test pass 100%, commit hash, test execution log, benchmark report).
-- **`readiness.md`**: Bảng kiểm tra sẵn sàng lập trình (Coding Readiness Checklist) chứng minh bộ tài liệu đã đạt chuẩn trước khi giao việc cho dev hoặc agent code.
+- **`readiness.md`**: Bảng ghi trạng thái sẵn sàng, điều kiện đã đạt và khoảng trống còn mở cho từng gói việc. Trạng thái chưa sẵn sàng là kết quả hợp lệ.
 
 ---
 
