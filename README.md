@@ -1,6 +1,6 @@
 # DCA · Document Curation & Assurance
 
-DCA là bộ công cụ và hướng dẫn quy chuẩn dành cho các Agent CLI (Codex, Antigravity,...) nhằm chuyển hóa toàn bộ dữ liệu thô, ghi chú hỗn độn hoặc tài liệu dự án chưa hoàn chỉnh thành một bộ thư mục `docs/` kỹ thuật chuẩn mực theo **8 Trụ Cột Kỹ Nghệ Hệ Thống**, có tính truy vết cao và sẵn sàng giao việc trực tiếp cho lập trình viên hoặc coding agent.
+DCA là bộ công cụ và hướng dẫn quy chuẩn dành cho các Agent CLI (Codex, Antigravity,...) nhằm chuyển hóa toàn bộ dữ liệu thô, ghi chú hỗn độn hoặc tài liệu dự án chưa hoàn chỉnh thành một bộ thư mục `docs/` kỹ thuật chuẩn mực theo **8 Trụ Cột Kỹ Nghệ Hệ Thống**, có tính truy vết cao, ghi rõ khoảng trống cần làm rõ và chỉ giao việc khi thông tin đủ căn cứ.
 
 ---
 
@@ -87,5 +87,5 @@ Sau khi [cài DCA](INSTALL.md), bạn có thể gọi trực tiếp trong phiên
 ## Quy tắc chất lượng đầu ra
 
 1. **Tuyệt đối không rò rỉ rác thô:** Không đưa đường dẫn tuyệt đối máy tính cá nhân, tên file thô ngẫu nhiên, danh mục nguồn chưa xử lý hay đoạn trích thô vào thư mục `docs/`.
-2. **Truy vết 2 chiều khép kín:** Mỗi mục tiêu sinh ra yêu cầu, mỗi yêu cầu dẫn đến thiết kế và bài test, mỗi bài test và module dẫn đến phiếu giao việc cụ thể.
-3. **Sẵn sàng cho việc lập trình:** Thư mục `08-delivery/` cung cấp các phiếu giao việc (`TASK-xxx`) hoàn toàn độc lập, quy định rõ file được sửa, file cấm sửa và bằng chứng kiểm thử cần nộp để lập trình viên hoặc coding agent làm việc ngay lập tức mà không phải phỏng đoán.
+2. **Truy vết trung thực:** Liên kết mục tiêu, yêu cầu, thiết kế, ca kiểm chứng và nhiệm vụ bằng mã nội bộ. Chỉ ghi liên kết đã có căn cứ; ô còn thiếu phải hiện trong phân tích khoảng trống và file câu hỏi.
+3. **Điều kiện giao việc:** `08-delivery/` chỉ chứa phiếu `TASK-xxx` có mục tiêu, yêu cầu, phụ thuộc, ranh giới và bằng chứng bàn giao đã xác định. Nếu chưa có cấu trúc kho mã hoặc quyết định cần thiết, ghi trạng thái chưa sẵn sàng và hỏi làm rõ; DCA không tự viết mã.
